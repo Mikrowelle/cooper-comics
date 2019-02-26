@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cooper Collection - Browse</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+    <!-- CDNs for jQuery, List.JS, and Handlebars -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+
+    <!-- Cooper Comics Collection API -->
+    <!-- https://api.sheety.co/2bbafd65-390f-4ef0-834a-fd9b6545cccc -->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.getJSON('https://api.sheety.co/718d15bf-dd41-4c50-be45-78c879e8abd4', function (data) {
+                var template = Handlebars.compile($('#item-template').html())
+                $('#items').html(template(data))
+            })
+        })
+    </script>
+
+    <script id="item-template" type="text/x-handlebars-template">
+        {{#each this}}
+    <li>
+      <div class="top-line">
+        <h3 class="name">{{title}} <span class="issue">(#{{num}})</span></h3>
+        <p class="date">{{date}}</p>
+      </div>
+      <p class="publisher">{{pub}}</p>     
+      <p class="tag">{{genre1}}</p>
+      <p class="tag">{{genre2}}</p>
+    </li>
+    {{/each}}
+</script>
+
+    <!-- List of Items in the Cooper Collection -->
+    <div class="wrapper">
+        <div id="test-list">
+            <h1 class="header">Cooper Comics Collection</h1>
+            <input type="text" class="fuzzy-search" placeholder="Search the Collection" />
+            <ul class="list">
+                <div id="items">Loading Comics...</div>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Local JS -->
+    <script src="scripts.js"></script>
+
+</body>
+
+</html>
